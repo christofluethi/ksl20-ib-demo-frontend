@@ -4,8 +4,8 @@
 
 export const environment = {
   production: false,
-  producerBaseUrl: 'http://localhost:8080/producer',
-  consumerAppBaseUrl: 'http://localhost:8080/consumer-app'
+  producerBaseUrl: 'http://localhost:8080/producers',
+  consumerAppBaseUrl: 'http://localhost:8080/consumers'
 };
 
 /*

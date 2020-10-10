@@ -12,11 +12,11 @@
   <table class="table">
     <tr style="background-color: #efefef" *ngFor="let ca of consumerApps">
       <td>
-        <a routerLink="/consumer-app/{{ca.consumerAppId}}"><h5>Consumer {{ca.consumerAppId}} </h5></a>
+        <a routerLink="/consumer-app/{{ca.id}}"><h5>Consumer {{ca.id}} </h5></a>
         {{ca.implementation.toLowerCase().replace("_", " ")}}
       </td>
       <td>
-        <button class="btn btn-sm btn-icon" (click)="stopConsumer(ca.consumerAppId)">
+        <button class="btn btn-sm btn-icon" (click)="stopConsumer(ca.id)">
           <img src="assets/icon/x.png"/>
         </button>
       </td>
@@ -36,10 +36,15 @@
   <table class="table">
     <tr *ngFor="let prod of producers">
       <td>
-        <h5>Producer {{prod.producerId}}</h5>
-        Speed: <span>{{prod.speedMsgPerSec}}</span> msg/sec
-        <input type="range" class="custom-range" id="customRange2" min="0" max="1000" [value]="prod.speedMsgPerSec"
-               (input)="updateRecordProcessingDuration(prod.producerId, $event.target.value)"/>
+        <h5>Producer {{prod.id}}</h5>
+        Speed: <span>{{prod.speed}}</span> msg/sec
+        <input type="range" class="custom-range" id="customRange2" min="0" max="100" [value]="prod.speed"
+               (input)="updateRecordProcessingDuration(prod.id, $event.target.value)"/>
+      </td>
+      <td>
+        <button class="btn btn-sm btn-icon" (click)="stopProducer(prod.id)">
+          <img src="assets/icon/x.png"/>
+        </button>
       </td>
     </tr>
   </table>
@@ -54,6 +59,10 @@
     </button>
   </div>
   <div class="modal-body">
+    <div class="form-group">
+      <label>Topic: </label>
+      <input class="form-control" type="text" [(ngModel)]="consumeTopic"/>
+    </div>
     <ul>
       <li *ngFor="let impl of consumerAppTypes">
         <a [routerLink]="" (click)="startConsuming(impl)"> {{impl}} </a>

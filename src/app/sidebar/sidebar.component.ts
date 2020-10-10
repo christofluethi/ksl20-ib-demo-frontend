@@ -17,7 +17,8 @@ export class SidebarComponent implements OnInit {
   public producers: ProducerInfo[] = [];
   public consumerAppTypes: string[] = [];
 
-  public produceTopic = 'ksl20-input-topic';
+  public produceTopic = 'unbalanced';
+  public consumeTopic = 'unbalanced';
 
   constructor(private consumerAppService: ConsumerAppService,
               private producerService: ProducerService,
@@ -52,7 +53,7 @@ export class SidebarComponent implements OnInit {
 
 
   protected startConsuming(impl: string) {
-    this.consumerAppService.startConsumerApp(impl)
+    this.consumerAppService.startConsumerApp(impl, this.consumeTopic)
       .subscribe(result => {
         console.log('Started ', impl, ' with result: ', result);
         this.fetchConsumerList();
@@ -68,6 +69,13 @@ export class SidebarComponent implements OnInit {
       });
   }
 
+  protected stopProducer(producerId: string) {
+    this.producerService.stopProducer(producerId)
+      .subscribe(result => {
+        console.log('Stropped ', producerId, ' with result: ', result);
+        this.fetchProducerList();
+      });
+  }
 
   protected startProducer() {
     console.log('Starting producer for topic: ', this.produceTopic);
@@ -79,14 +87,12 @@ export class SidebarComponent implements OnInit {
     this.modalService.dismissAll();
   }
 
-  protected updateRecordProcessingDuration(producerId: string, speedMs: number) {
-    this.producerService.updateProducerSpeed(producerId, speedMs).subscribe(result => {
+  protected updateRecordProcessingDuration(id: string, speedMs: number) {
+    this.producerService.updateProducerSpeed(id, speedMs).subscribe(result => {
       console.log('Producer update speed result: ' + result);
       if (result) {
-        this.producers.find(p => p.producerId == producerId).speedMsgPerSec = speedMs;
+        this.producers.find(p => p.id === id).speed = speedMs;
       }
     });
   }
-
-
 }

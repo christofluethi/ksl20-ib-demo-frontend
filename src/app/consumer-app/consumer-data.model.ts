@@ -1,8 +1,8 @@
 import {WorkerInfo} from './worker-info.model';
 
 export class ConsumingStateData {
-  constructor(public consumerAppId: string,
-              public consumerAppType: string,
+  constructor(public is: string,
+              public type: string,
               public workerInfos: WorkerInfo[],
               public lastPollRecordsCount: number,
               public recordProcessingDurationMs: number) {
@@ -12,8 +12,7 @@ export class ConsumingStateData {
 export class ConsumerAppInfo {
 
   constructor(public implementation: string,
-              public consumerAppId: String) {
+              public topic: string,
+              public id: string) {
   }
-
-
 }

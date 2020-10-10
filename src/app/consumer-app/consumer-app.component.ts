@@ -127,7 +127,7 @@ export class ConsumerAppComponent implements OnInit, OnDestroy {
         this.workersData = csd.workerInfos.map(w => new WorkerInfo(w.totalRecords, w.processedRecords, w.threadName));
         this.lastPollRecordsCount = csd.lastPollRecordsCount;
         this.recordProcessingDurationMs = csd.recordProcessingDurationMs;
-        this.consumerAppType = csd.consumerAppType.toLowerCase().replace('_', ' ');
+        this.consumerAppType = csd.type.toLowerCase().replace('_', ' ');
         // console.log(csd);
       });
     }
